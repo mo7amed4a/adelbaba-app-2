@@ -7,7 +7,7 @@ const nextConfig = {
   //   appDir: true
   // }
   images: {
-    domains: ["pasteboard.co","images.unsplash.com"]
+    domains: ["pasteboard.co","images.unsplash.com", "s3-alpha-sig.figma.com"]
   }
 }
 
