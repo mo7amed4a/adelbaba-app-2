@@ -4,9 +4,7 @@ import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
 
 export default async function Page({ params }: {
-  params: {
-    lng: string;
-  };
+  params: Promise<{ lng: string }>
 }) {
   let { lng } = await params
   const { t } = await getTranslation(lng, 'second-page')

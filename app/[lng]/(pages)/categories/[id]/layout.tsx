@@ -9,16 +9,15 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 
+
 export default async function Layout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>
 }) {
-  const { id } = await params;
+  const { id } = (await params)
   return (
     <div className="relative">
       <SidebarProvider>

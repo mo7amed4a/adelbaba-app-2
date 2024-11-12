@@ -4,8 +4,10 @@ import { dir } from 'i18next'
 import { fallbackLng, languages } from '@/app/i18n/settings';
 import { useTranslation as getTranslation } from '@/app/i18n';
 
-export async function generateMetadata({ params }: { params: { lng: string } }) {
-  let lng = params.lng // لا حاجة لاستخدام await هنا
+type ParamsLayoutType = Promise<{ lng: string }>;
+
+export async function generateMetadata({ params }: { params: ParamsLayoutType }) {
+  let lng = (await params).lng
   if (languages.indexOf(lng) < 0) lng = fallbackLng
   const { t } = await getTranslation(lng)
   return {
@@ -14,20 +16,19 @@ export async function generateMetadata({ params }: { params: { lng: string } }) 
   }
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: {
-    lng: string;
-  };
+  params: ParamsLayoutType
 }) {
-  const lng = params.lng // لا حاجة لاستخدام await هنا أيضًا
+  const lng = (await params).lng
   return (
     <html lang={lng} dir={dir(lng)}>
       <head />
       <body>
+        {lng}
         {children}
       </body>
     </html>

@@ -6,9 +6,7 @@ import ProductSection from '@/components/pages/home/productsSection';
 import CategoriesSection from '@/components/pages/home/categoriesSection';
 
 export default async function Page({ params }: {
-  params: {
-    lng: string;
-  };
+  params: Promise<{ lng: string }>
 }) {
   let { lng } = await params
   if (languages.indexOf(lng) < 0) lng = fallbackLng
