@@ -1,5 +1,5 @@
 import { languages, fallbackLng } from '../../i18n/settings'
-import { useTranslation } from '../../i18n'
+import { useTranslation as getTranslation } from '../../i18n'
 import { Footer } from '../components/Footer'
 import HeroSection from '@/components/pages/home/HeroSection'
 import ProductSection from '@/components/pages/home/productsSection';
@@ -12,7 +12,7 @@ export default async function Page({ params }: {
 }) {
   let { lng } = await params
   if (languages.indexOf(lng) < 0) lng = fallbackLng
-  const { t } = await useTranslation(lng)
+  const { t } = await getTranslation(lng)
 
   return (
     <>

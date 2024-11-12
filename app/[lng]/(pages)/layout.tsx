@@ -3,7 +3,7 @@ import "@/app/[lng]/global.css";
 import { dir } from "i18next";
 import HeaderApp from "@/components/layouts/Header";
 import { fallbackLng, languages } from "@/app/i18n/settings";
-import { useTranslation } from "@/app/i18n";
+import { useTranslation as getTranslation } from "@/app/i18n";
 import FooterApp from "@/components/layouts/Footer";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -20,7 +20,7 @@ export async function generateMetadata({
 }) {
   let { lng } = await params;
   if (languages.indexOf(lng) < 0) lng = fallbackLng;
-  const { t } = await useTranslation(lng);
+  const { t } = await getTranslation(lng);
   return {
     title: t("title"),
     content:
