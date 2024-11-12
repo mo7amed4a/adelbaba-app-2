@@ -6,6 +6,9 @@ const nextConfig = {
   //   // Required: for next 13
   //   appDir: true
   // }
+  images: {
+    domains: ["pasteboard.co","images.unsplash.com"]
+  }
 }
 
 module.exports = nextConfig

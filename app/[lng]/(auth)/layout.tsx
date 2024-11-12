@@ -1,12 +1,13 @@
-import './global.css'
+import '@/app/[lng]/global.css'
 
 import { dir } from 'i18next'
-import { languages, fallbackLng } from '../i18n/settings'
-import { useTranslation } from '../i18n'
+import { fallbackLng, languages } from '@/app/i18n/settings';
+import { useTranslation } from '@/app/i18n';
 
 export async function generateStaticParams() {
   return languages.map((lng) => ({ lng }))
 }
+
 
 export async function generateMetadata({ params }: {
   params: {
