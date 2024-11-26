@@ -15,14 +15,14 @@ const InputWithIcon = ({
   endIcon,
 }: InputWithIconProps) => {
   return (
-    <div className={cn("relative overflow-hidden rounded", className)}>
+    <div className={cn("relative overflow-hidden rounded-lg md:w-full border-2 border-primary", className)}>
       <span className="absolute start-3 top-1/2 transform -translate-y-1/2 text-gray-500">
         {startIcon || null}
       </span>
       <Input
         placeholder="Search..."
         type="text"
-        className="px-10 text-gray-800" // Adds padding to make room for the icon
+        className="py-3 md:py-7 md:text-lg px-10 text-gray-800" // Adds padding to make room for the icon
       />
       <span className="absolute end-3 top-1/2 transform -translate-y-1/2 text-gray-500">
         {endIcon || null}

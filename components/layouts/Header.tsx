@@ -1,99 +1,250 @@
-import React from "react";
-import InputWithIcon from "../global/InputIcon";
-import {
-  Heart,
-  Search,
-  ShoppingCart,
-  SlidersHorizontal,
-  UserCircle,
-} from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
+"use client";
+import { useState, useEffect } from "react";
+import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { Heart, ShoppingCart, UserCircle } from "lucide-react";
 import LanguageList from "./languages";
+import Image from "next/image";
+import React from "react";
+import { usePathname } from "next/navigation";
+import { CategoryHeader } from "./category-header";
+import LinkApp from "../global/LinkApp";
 
-export default function HeaderApp() {
+export default function HeaderApp({
+  lng
+}: {
+  lng: string
+}) {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname.split("/").length === 2;
+  const isAuth = pathname.includes("auth");
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <div className="bg-white dark:bg-gray-800 dark:text-white">
-      <div className="relative">
-        <div className="fixed bottom-0 md:top-0 inset-x-0 h-12 md:text-white bg-white md:bg-transparent border-t md:border-t-0 border-t-gray-300  w-full  z-10 flex items-center px-4 justify-between">
-          <div className="flex gap-x-2 items-center">
-            <Image
-              src={"/icons/logo.png"}
-              width={35}
-              height={70}
-              className="py-4"
-              alt={"logo"}
-            />
-            <h1 className="text-xl font-bold text-white">Adelbaba</h1>
-          </div>
-          <div className="w-full md:w-auto">
-            <ul className="flex gap-x-4 justify-between text-sm [&>*]:w-full md:[&>*]:w-auto  hover:[&>*]:bg-gray-200">
-              <li>
-                <Link
-                  href={"/auth/login"}
-                  className="flex gap-x-2 justify-center items-center py-2"
-                >
-                  <UserCircle className="size-8 md:size-5" />
-                  <span className="hidden md:block">Sign in / Sign up</span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={"/cart"}
-                  className="flex gap-x-2 justify-center items-center py-2"
-                >
-                  <ShoppingCart className="size-8 md:size-5" />
-                  <span className="hidden md:block">Cart</span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={"/wishlist"}
-                  className="flex gap-x-2 justify-center items-center py-2"
-                >
-                  <Heart className="size-8 md:size-5" />
-                  <span className="hidden md:block">wishlist</span>
-                </Link>
-              </li>
-              <li>
-                <LanguageList />
-              </li>
-            </ul>
-          </div>
+    <div className="relative h-16">
+      <header
+        className={`flex justify-between h-16 w-full shrink-0 items-center px-4 md:px-6 fixed top-0 left-0 right-0 z-[4447] ${
+          isScrolled
+            ? "bg-white text-black shadow"
+            : isHome
+            ? "text-white"
+            : "bg-white text-black"
+        }`}
+      >
+        <LinkApp lng={lng}
+          href="/"
+          className="mr-6 hidden lg:flex items-center gap-x-2"
+        >
+          <Image
+            src={"/icons/logo.png"}
+            width={35}
+            height={70}
+            className="py-4"
+            alt={"logo"}
+          />
+          <h1 className="text-2xl font-bold">AdelBaba.net</h1>
+        </LinkApp>
+        <nav className="ms-auto hidden lg:flex gap-4 w-auto">
+          {isAuth ? <LinksAuth lng={lng} /> : <LinksNavbar lng={lng}/>}
+        </nav>
+        <div className="md:hidden">
+        <LinkApp lng={lng}
+          href="/"
+          className="flex items-center gap-x-2"
+        >
+          <Image
+            src={"/icons/logo.png"}
+            width={35}
+            height={70}
+            className="py-4"
+            alt={"logo"}
+          />
+          <h1 className="text-lg font-bold">AdelBaba.net</h1>
+        </LinkApp>
         </div>
-        <Image width={500} height={500} alt="header"
-          src="https://s3-alpha-sig.figma.com/img/102f/ef8c/472baebe2ea40046f4f0859ab9232b04?Expires=1731888000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Ps172LaCvRVhoHxZb2seiJRxfxG~0fpNgPbankQy-JO~AKeIXE9rycR99M7dT8Lk4MCzW5foKZwA9LAfXuGf6eDlSzrSMnhsRDq2MS02vsauJmXdNohG~Tegj~nEn86ItkQUGxcHx-FGvH8mycPv0Mrl0smhesj11jhm6rTy6hJxR7o8nJQtQLMfn0QX9aQu-s6Z-csgLNCIhQcsLMIiKcdkjzntZxrm6XsTiRSCfH6oLaHdO87H6L3xacJWRKp~Agz6~FQfrrl6BemP0P2rm0eMV9NoUihTMEtC-54mLEcknpBb-cEHyKELSKOXG5ZPlXfJXGCyFcdRVcEyJN6t7g__"
-          className="absolute inset-0 object-cover w-full h-full"
-        />
-        <div className="relative bg-opacity-75 dark:bg-opacity-[90%] bg-gray-950 pt-12">
-          <div className="relative px-4 py-16 mx-auto overflow-hidden sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
-            <div className="text-white flex flex-col items-center justify-center">
-              <div className="w-full flex justify-center items-center overflow-x-scroll scrollbar-hidden">
-                <ul className="flex gap-x-4 my-4 text-sm w-full md:justify-center [&>*]:w-auto">
-                  <li>All categories</li>
-                  <li>New in</li>
-                  <li>Sale</li>
-                  <li>Electronics</li>
-                  <li>Screens</li>
-                  <li>Speakers</li>
-                  <li>Covers</li>
-                  <li>Cables</li>
-                  <li>Chargers</li>
-                  <li>Others</li>
-                </ul>
-              </div>
-              <div className="w-full max-w-xl mb-12 xl:mb-0 xl:pr-16 xl:w-7/12 flex justify-center">
-                <InputWithIcon
-                  className="bg-white"
-                  startIcon={<Search />}
-                  endIcon={<SlidersHorizontal />}
-                />
-                {/* <Input /> */}
-              </div>
-            </div>
-          </div>
+        {isAuth ? <SideBarForAuth lng={lng} /> : <SideBarForApp lng={lng} />}
+
+      </header>
+      {!isHome && !isAuth && (
+        <div className={"pt-16"}>
+          <CategoryHeader lng={lng} />
         </div>
-      </div>
+      )}
     </div>
+  );
+}
+
+function MenuIcon(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#aaa"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <line x1="4" x2="20" y1="12" y2="12" />
+      <line x1="4" x2="20" y1="6" y2="6" />
+      <line x1="4" x2="20" y1="18" y2="18" />
+    </svg>
+  );
+}
+
+export function LinksNavbar({ isMobile = false , lng}: { isMobile?: boolean , lng: string}) {
+  
+  const classForMobile =
+    "flex gap-x-2 w-full whitespace-nowrap items-center rounded-md p-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50";
+  const classForDesktop =
+    "flex gap-x-2 h-9 w-full whitespace-nowrap items-center justify-center rounded-md p-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50";
+
+  return (
+    <>
+      <LinkApp lng={lng} 
+        href={"/auth/sign-in"}
+        className={isMobile ? classForMobile : classForDesktop}
+      >
+        <UserCircle className="size-8 md:size-5" />
+        <span className="w-auto">Sign in / Sign up</span>
+      </LinkApp>
+      <LinkApp lng={lng}
+        href={"/cart"}
+        className={isMobile ? classForMobile : classForDesktop}
+      >
+        <ShoppingCart className="size-8 md:size-5" />
+        <span>Cart</span>
+      </LinkApp>
+      <LinkApp lng={lng}
+        href={"/wishlist"}
+        className={isMobile ? classForMobile : classForDesktop}
+      >
+        <Heart className="size-8 md:size-5" />
+        <span>wishlist</span>
+      </LinkApp>
+      <LanguageList />
+    </>
+  );
+}
+
+function SideBarForApp({
+  lng
+}: {
+  lng: string
+}) {
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline" size="icon" className="lg:hidden">
+          <MenuIcon className="h-6 w-6" />
+          <span className="sr-only">Toggle navigation menu</span>
+        </Button>
+      </SheetTrigger>
+      <SheetContent side="left" className="z-[81781454718]">
+        <LinkApp lng={lng}
+          href="/"
+          className="mr-6 flex items-center gap-x-2"
+          
+        >
+          <Image
+            src={"/icons/logo.png"}
+            width={35}
+            height={70}
+            className="py-4"
+            alt={"logo"}
+          />
+          <h1 className="text-xl font-bold">AdelBaba.net</h1>
+        </LinkApp>
+        <div className="grid gap-2 py-6">
+          <LinksNavbar lng={lng} isMobile />
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+}
+
+function SideBarForAuth({
+  lng
+}: {
+  lng: string
+}) {
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline" size="icon" className="lg:hidden">
+          <MenuIcon className="h-6 w-6" />
+          <span className="sr-only">Toggle navigation menu</span>
+        </Button>
+      </SheetTrigger>
+      <SheetContent side="left" className="z-[81781454718]">
+        <LinkApp lng={lng}
+          href="/"
+          className="mr-6 flex items-center gap-x-2"
+          
+        >
+          <Image
+            src={"/icons/logo.png"}
+            width={35}
+            height={70}
+            className="py-4"
+            alt={"logo"}
+          />
+          <h1 className="text-xl font-bold">AdelBaba.net</h1>
+        </LinkApp>
+        <div className="grid gap-2 py-6">
+          <LinksAuth lng={lng}/>
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+}
+
+export function LinksAuth({ isMobile = false, lng }: { isMobile?: boolean , lng: string}) {
+  const pathname = usePathname()
+  const classForMobile =
+    "flex gap-x-2 w-full whitespace-nowrap items-center rounded-md p-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50";
+  const classForDesktop =
+    "flex gap-x-2 h-9 w-full whitespace-nowrap items-center justify-center rounded-md p-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50";
+
+  return (
+    <> 
+      {(pathname.includes('sign-up') || pathname.includes('sign-in')) ? <LinkApp lng={lng}
+        href={"/auth/become-a-seller"}
+        // className={isMobile ? classForMobile : classForDesktop}
+        >
+        <Button>
+        <span className="w-auto">Become a Seller</span>
+      </Button>
+      </LinkApp>: 
+          <LinkApp lng={lng}
+          href={"/auth/sign-in"}
+          // className={isMobile ? classForMobile : classForDesktop}
+          >
+          <Button>
+          <span className="w-auto">Sign In</span>
+        </Button>
+        </LinkApp>
+      }
+      
+      <LanguageList />
+    </>
   );
 }

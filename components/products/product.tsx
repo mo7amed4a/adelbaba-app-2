@@ -51,12 +51,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 {category}
               </Link>
             </h4>
-            <h3 className="font-semibold text-base md:text-lg text-gray-500">
+            <h3 className="font-semibold text-xs sm:text-base md:text-lg text-gray-500">
               <span className="cursor-pointer">{title}</span>
             </h3>
           </div>
           <div className="text-end flex flex-col items-end">
-            <div className="mt-2 flex items-end">
+            <div className="flex items-end">
               {[...Array(5)].map((_, index) => (
                 <svg
                   key={index}
@@ -73,11 +73,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
             </div>
             <div className='flex gap-x-2 items-center'>
               {oldPrice && (
-                <del className="mt-px text-xs font-semibold text-gray-400 sm:text-sm">
+                <del className="mt-px text-xs sm:font-semibold text-gray-400 sm:text-sm">
                   {oldPrice}
                 </del>
               )}
-              <p className="text-sm md:text-base text-primary font-bold">
+              <p className="text-xs sm:text-sm md:text-base text-primary font-bold">
                 {price}
               </p>
             </div>

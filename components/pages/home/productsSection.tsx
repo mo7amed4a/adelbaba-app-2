@@ -109,14 +109,14 @@ export default function ProductSection({
     <section className="py-12 bg-white dark:bg-gray-800 dark:text-white">
       <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between text-start border-b border-b-gray-200">
-          <h2 className="text-lg sm:text-2xl md:text-3xl text-gray-400 border-b-2 border-primary inline-block pb-2">
-            <span className="pe-2">{firstTitle}</span>
+          <h2 className="text-lg sm:text-2xl md:text-3xl text-gray-400 border-b-2 border-primary flex pb-2 gap-x-2">
+            <span>{firstTitle}</span>
             <span className="text-primary">{secondTitle}</span>
           </h2>
-          <div className="inline-block pb-2 items-center">
-            <Link
+          <div className="inline-block pb-2 items-center text-xs md:text-base">
+          <Link
               href={linkAll}
-              className="flex hover:text-primary text-gray-500"
+              className="flex items-center hover:text-primary text-gray-500"
             >
               <span>View All</span>
               <svg
@@ -124,14 +124,15 @@ export default function ProductSection({
                 height="25"
                 viewBox="0 0 24 25"
                 fill="none"
+                className="rtl:rotate-180"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   d="M9.25 7L14.75 12.5L9.25 18"
                   stroke="#F3B852"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             </Link>

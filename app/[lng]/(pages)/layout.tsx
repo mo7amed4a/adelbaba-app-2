@@ -1,11 +1,11 @@
-import "@/app/[lng]/global.css";
-
 import { dir } from "i18next";
 import HeaderApp from "@/components/layouts/Header";
 import { fallbackLng, languages } from "@/app/i18n/settings";
 import { useTranslation as getTranslation } from "@/app/i18n";
 import FooterApp from "@/components/layouts/Footer";
 import { Toaster } from "@/components/ui/toaster";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/_route";
 
 export async function generateStaticParams() {
   return languages.map((lng) => ({ lng }));
@@ -37,13 +37,17 @@ export default async function RootLayout({
     lng: string;
   };
 }) {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    // redirect("/auth/login");
+  }
   const { lng } = await params;
   return (
     <html lang={lng} dir={dir(lng)}>
       <head />
       <body>
         <Toaster />
-        <HeaderApp />
+        <HeaderApp lng={lng} />
         {children}
         <FooterApp />
       </body>

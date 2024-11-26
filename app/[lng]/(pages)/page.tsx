@@ -1,9 +1,9 @@
 import { languages, fallbackLng } from '../../i18n/settings'
 import { useTranslation as getTranslation } from '../../i18n'
-import { Footer } from '../components/Footer'
 import HeroSection from '@/components/pages/home/HeroSection'
 import ProductSection from '@/components/pages/home/productsSection';
 import CategoriesSection from '@/components/pages/home/categoriesSection';
+import SubHeader from '@/components/layouts/SubHeader';
 
 export default async function Page({ params }: {
   params: Promise<{ lng: string }>
@@ -15,6 +15,7 @@ export default async function Page({ params }: {
   return (
     <>
       <main>
+        <SubHeader lng={lng}/>
         <HeroSection />
         <div>
           <CategoriesSection title="Shop From Top Categories" linkAll={`/categories`} isHome />
@@ -26,7 +27,7 @@ export default async function Page({ params }: {
           <ProductSection title="Big Sale" linkAll={`/products/big-sale`} />
         </div>
       </main>
-      <Footer lng={lng}/>
+      {/* <Footer lng={lng}/> */}
     </>
   )
 }

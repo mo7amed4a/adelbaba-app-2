@@ -1,19 +1,23 @@
-import '@/app/[lng]/global.css'
-
-import { dir } from 'i18next'
-import { fallbackLng, languages } from '@/app/i18n/settings';
-import { useTranslation as getTranslation } from '@/app/i18n';
+import { dir } from "i18next";
+import { fallbackLng, languages } from "@/app/i18n/settings";
+import { useTranslation as getTranslation } from "@/app/i18n";
+import HeaderApp from "@/components/layouts/Header";
 
 type ParamsLayoutType = Promise<{ lng: string }>;
 
-export async function generateMetadata({ params }: { params: ParamsLayoutType }) {
-  let lng = (await params).lng
-  if (languages.indexOf(lng) < 0) lng = fallbackLng
-  const { t } = await getTranslation(lng)
+export async function generateMetadata({
+  params,
+}: {
+  params: ParamsLayoutType;
+}) {
+  let lng = (await params).lng;
+  if (languages.indexOf(lng) < 0) lng = fallbackLng;
+  const { t } = await getTranslation(lng);
   return {
-    title: t('title'),
-    content: 'A playground to explore new Next.js 13/14 app directory features such as nested layouts, instant loading states, streaming, and component level data fetching.'
-  }
+    title: t("title"),
+    content:
+      "A playground to explore new Next.js 13/14 app directory features such as nested layouts, instant loading states, streaming, and component level data fetching.",
+  };
 }
 
 export default async function RootLayout({
@@ -21,16 +25,16 @@ export default async function RootLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: ParamsLayoutType
+  params: ParamsLayoutType;
 }) {
-  const lng = (await params).lng
+  const lng = (await params).lng;
   return (
     <html lang={lng} dir={dir(lng)}>
       <head />
       <body>
-        {lng}
-        {children}
+        <HeaderApp lng={lng} />
+        <div className="[&>*]:h-full h-screen min-h-screen">{children}</div>
       </body>
     </html>
-  )
+  );
 }

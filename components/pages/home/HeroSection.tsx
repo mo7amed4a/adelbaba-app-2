@@ -33,7 +33,7 @@ export default function HeroSection() {
           <svg
             width={472}
             height={161}
-            className="hidden md:block absolute top-0 start-5"
+            className="hidden lg:block absolute top-0 start-5"
             viewBox="0 0 472 161"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -78,7 +78,7 @@ export default function HeroSection() {
             alt=""
           />
           <svg
-            className="hidden md:block absolute bottom-0 start-5 z-0"
+            className="hidden lg:block absolute bottom-0 start-5 z-0"
             width="148"
             height="61"
             viewBox="0 0 148 61"
@@ -99,8 +99,8 @@ export default function HeroSection() {
                 y2="73.5"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stop-color="#F3B852" />
-                <stop offset="1" stop-color="#FBE7C5" />
+                <stop stopColor="#F3B852" />
+                <stop offset="1" stopColor="#FBE7C5" />
               </linearGradient>
               <linearGradient
                 id="paint1_linear_999_136"
@@ -110,8 +110,8 @@ export default function HeroSection() {
                 y2="73.5"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stop-color="#F3B852" />
-                <stop offset="1" stop-color="#FBE7C5" />
+                <stop stopColor="#F3B852" />
+                <stop offset="1" stopColor="#FBE7C5" />
               </linearGradient>
             </defs>
           </svg>

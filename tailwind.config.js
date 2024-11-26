@@ -66,7 +66,17 @@ module.exports = {
   				ring: 'hsl(var(--sidebar-ring))'
   			}
   		}
-  	}
+
+  	},
+	  screens: {
+		'sm': '640px',
+		'md': '768px',
+		'lg': '1024px',
+		'xl': '1280px',
+		'2xl': '1410px',
+		'3xl': '1536px',
+		'4xl': '1736px',
+	  }
   },
   plugins: [require("tailwindcss-animate")],
 }
