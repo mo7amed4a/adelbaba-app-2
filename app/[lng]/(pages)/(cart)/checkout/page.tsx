@@ -135,7 +135,7 @@ export default function CheckoutForm() {
             className="flex flex-wrap gap-2 select-none"
           >
             {["Business", "Factory", "Warehouse", "Residential"].map((type) => (
-              <Label
+              <Label key={type}
                 className={cn(
                   "flex items-center justify-between p-4 border border-gray-300 rounded-full cursor-pointer",
                   propertyTypes === type && "border-yellow-500"

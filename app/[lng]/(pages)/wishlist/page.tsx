@@ -69,7 +69,7 @@ const productsData: ProductCardProps[] = [
 ];
 
 
-export default function page() {
+export default function Page() {
   const [productInWishlist, setProductInWishlist] = useState(productsData);
   const [isOpenAlert, setIsOpenAlert] = useState(false);
 
