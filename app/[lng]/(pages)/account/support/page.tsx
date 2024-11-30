@@ -13,7 +13,7 @@ export default function Page() {
     setIsOpen(true);
   };
   return (
-    <div className="min-h-screen text-gray-700 p-6 max-w-2xl mx-auto space-y-8">
+    <div className="min-h-screen text-gray-700 p-6 max-w-2xl space-y-8">
       <form onSubmit={handleSubmit} className="w-full space-y-4">
         <div className="space-y-2">
           <Label htmlFor="subject">Subject</Label>

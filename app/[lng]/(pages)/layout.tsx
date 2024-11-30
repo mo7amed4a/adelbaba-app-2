@@ -6,6 +6,8 @@ import FooterApp from "@/components/layouts/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/_route";
+import NextTopLoader from "nextjs-toploader";
+import { ChatPageDrawer } from "./(chat)/chat/page";
 
 export async function generateStaticParams() {
   return languages.map((lng) => ({ lng }));
@@ -46,9 +48,11 @@ export default async function RootLayout({
     <html lang={lng} dir={dir(lng)}>
       <head />
       <body>
+        <NextTopLoader color="var(--primary)" />
         <Toaster />
         <HeaderApp lng={lng} />
         {children}
+        <ChatPageDrawer />
         <FooterApp />
       </body>
     </html>
