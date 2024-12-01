@@ -18,7 +18,7 @@ export default function SubHeader({
           className="absolute inset-0 object-cover w-full h-full"
         />
         <div className="absolute bg-gray-950 bg-opacity-80 inset-0"></div>
-        <div>
+        <div className='relative z-auto'>
           <CategoryHeader lng={lng} isHome/>
         </div>
         <div className="w-full flex justify-center items-center mt-10">

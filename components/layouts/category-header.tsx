@@ -11,9 +11,12 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
-import Link from "next/link"
 import React from "react"
 import LinkApp from "../global/LinkApp"
+import { Button } from "../ui/button"
+import IconLeftAndRight from "../global/IconLeftAndRight"
+import img1 from '/public/icons/category/3.png'
+import CategoryCardForHeader from "../categories/CategoryCardForHeader"
 
 export function CategoryHeader({
     isHome=false,
@@ -35,39 +38,28 @@ export function CategoryHeader({
     ]
     
     return (
-      <NavigationMenu className="z-50 relative hidden lg:block">
-        <NavigationMenuList className="flex rtl:flex-row-reverse">
-          <NavigationMenuItem>
+      <NavigationMenu className="z-50 relative hidden lg:block w-[95vw] max-w-full" dir="ltr">
+        <NavigationMenuList className="flex">
+          <NavigationMenuItem className="">
             <NavigationMenuTrigger className={` ${!isHome && '!text-black'}`}>All Categories</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                <li className="row-span-3">
-                  <NavigationMenuLink asChild>
-                    <Link
-                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                      href="/"
-                    >
-                      {/* <Icons.logo className="h-6 w-6" /> */}
-                      <div className="mb-2 mt-4 text-lg font-medium">
-                        shadcn/ui
-                      </div>
-                      <p className="text-sm leading-tight text-muted-foreground">
-                        Beautifully designed components built with Radix UI and
-                        Tailwind CSS.
-                      </p>
-                    </Link>
-                  </NavigationMenuLink>
-                </li>
-                <ListItem href="/docs" title="Introduction">
-                  Re-usable components built using Radix UI and Tailwind CSS.
-                </ListItem>
-                <ListItem href="/docs/installation" title="Installation">
-                  How to install dependencies and structure your app.
-                </ListItem>
-                <ListItem href="/docs/primitives/typography" title="Typography">
-                  Styles for headings, paragraphs, lists...etc
-                </ListItem>
-              </ul>
+            <NavigationMenuContent className="flex gap-4 p-4 md:w-[95vw]">
+              <div className="w-[300px]">
+                {categories.map((item, index) => <Button key={index} variant={'ghost'} className="w-full flex justify-between h-14 rounded-none">
+                  <span>{item.name}</span>
+                  <IconLeftAndRight className="!size-7 text-gray-400"/>
+                </Button>)}
+              </div>
+              <div className="w-[300px]">
+                {[...Array(3)].map((e, index) => <Button key={index} variant={'ghost'} className="w-full flex justify-between h-14 rounded-none">
+                  <span>Male</span>
+                  {/* <IconLeftAndRight className="!size-7 text-gray-400"/> */}
+                </Button>)}
+              </div>
+              <div className="flex flex-wrap gap-x-5">
+                {categories.map((item, index) =>  
+                    <CategoryCardForHeader key={index} id={index} image={img1} title={item.name} isHome={isHome}/>
+                )}
+              </div>
             </NavigationMenuContent>
           </NavigationMenuItem>
           {categories && categories.length > 0 && categories.map(item => <NavigationMenuItem key={item.id}>

@@ -1,6 +1,7 @@
 import CategoryCard, {
   categoryCardProps,
 } from "@/components/categories/category";
+import IconLeftAndRight from "@/components/global/IconLeftAndRight";
 import {
   Carousel,
   CarouselContent,
@@ -58,22 +59,7 @@ export default function CategoriesSection({
               className="flex items-center hover:text-primary text-gray-500"
             >
               <span>View All</span>
-              <svg
-                width="24"
-                height="25"
-                viewBox="0 0 24 25"
-                fill="none"
-                className="rtl:rotate-180"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M9.25 7L14.75 12.5L9.25 18"
-                  stroke="#F3B852"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+             <IconLeftAndRight className="size-6 text-primary"/>
             </Link>
           </div>
         </div>
