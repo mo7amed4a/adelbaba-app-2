@@ -6,6 +6,9 @@ const nextConfig = {
   //   // Required: for next 13
   //   appDir: true
   // }
+//   i18n: { 
+// localeDetection:true
+//   },
   images: {
     domains: ["pasteboard.co","images.unsplash.com", "s3-alpha-sig.figma.com"]
   }

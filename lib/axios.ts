@@ -2,19 +2,20 @@ import axios from "axios";
 
 // Axios Interceptor Instance
 const AxiosApp = axios.create({
-    baseURL: process.env.BASE_URL
+    baseURL: process.env.NEXT_PUBLIC_BASE_URL + '/api',
 });
 
 AxiosApp.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem('token') as string;
-        const accessToken = JSON.parse(token);
-
-        // If token is present, add it to request's Authorization Header
-        if (accessToken) {
-            if (config.headers) config.headers.token = accessToken;
+        if (typeof window !== "undefined") {
+            const token = localStorage?.getItem('token') as string;
+            const accessToken = JSON.parse(token);
+            if (accessToken) {
+                if (config.headers) config.headers.token = accessToken;
+            }
+            return config;
         }
-        return config;
+        else return config
     },
     (error) => {
         // Handle request errors here

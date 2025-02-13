@@ -35,7 +35,7 @@ interface CategoriesSectionProps {
   isHome?: boolean
 }
 
-export default function CategoriesSection({
+export default async function CategoriesSection({
   title,
   categories = categoriesData,
   linkAll,
@@ -43,6 +43,7 @@ export default function CategoriesSection({
 }: CategoriesSectionProps) {
   const [firstHalf, secondHalf] = splitArrayInHalf(categories);
   const [firstTitle, secondTitle] = splitTitleInHalf(title);
+  
   return (
     <section className="py-12 bg-white dark:bg-gray-800 dark:text-white">
       <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">

@@ -11,7 +11,7 @@ export default async function Page({ params }: {
   let { lng } = await params
   if (languages.indexOf(lng) < 0) lng = fallbackLng
   const { t } = await getTranslation(lng)
-
+  
   return (
     <>
       <main>

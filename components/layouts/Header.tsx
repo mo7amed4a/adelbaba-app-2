@@ -2,13 +2,15 @@
 import { useState, useEffect } from "react";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Heart, ShoppingCart, UserCircle } from "lucide-react";
+import { ChevronDown, Heart, ShoppingCart, UserCircle } from "lucide-react";
 import LanguageList from "./languages";
 import Image from "next/image";
 import React from "react";
 import { usePathname } from "next/navigation";
 import { CategoryHeader } from "./category-header";
 import LinkApp from "../global/LinkApp";
+import { useSession } from "next-auth/react";
+import UserDrop from "./UserDrop";
 
 export default function HeaderApp({
   lng
@@ -115,24 +117,28 @@ export function LinksNavbar({ isMobile = false , lng}: { isMobile?: boolean , ln
   const classForMobile =
     "flex gap-x-2 w-full whitespace-nowrap items-center rounded-md p-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50";
   const classForDesktop =
-    "flex gap-x-2 h-9 w-full whitespace-nowrap items-center justify-center rounded-md p-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50";
+    "flex gap-x-2 h-12 w-full whitespace-nowrap items-center justify-center rounded-md p-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50";
 
+    const { data: session, status } = useSession()
+
+    console.log(session);
   return (
     <>
-      <LinkApp lng={lng} 
+      {status === "authenticated" ? <UserDrop user={session?.user}/>
+      : <LinkApp lng={lng} 
         href={"/auth/sign-in"}
         className={isMobile ? classForMobile : classForDesktop}
       >
         <UserCircle className="size-8 md:size-5" />
         <span className="w-auto">Sign in / Sign up</span>
-      </LinkApp>
-      <LinkApp lng={lng}
-        href={"/cart"}
-        className={isMobile ? classForMobile : classForDesktop}
-      >
-        <ShoppingCart className="size-8 md:size-5" />
-        <span>Cart</span>
-      </LinkApp>
+      </LinkApp>}
+        <LinkApp lng={lng}
+          href={"/cart"}
+          className={isMobile ? classForMobile : classForDesktop}
+        >
+          <ShoppingCart className="size-8 md:size-5" />
+          <span>Cart</span>
+        </LinkApp>
       <LinkApp lng={lng}
         href={"/wishlist"}
         className={isMobile ? classForMobile : classForDesktop}
@@ -224,6 +230,9 @@ export function LinksAuth({ isMobile = false, lng }: { isMobile?: boolean , lng:
   const classForDesktop =
     "flex gap-x-2 h-9 w-full whitespace-nowrap items-center justify-center rounded-md p-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50";
 
+ 
+  
+
   return (
     <> 
       {(pathname.includes('sign-up') || pathname.includes('sign-in')) ? <LinkApp lng={lng}
@@ -246,5 +255,5 @@ export function LinksAuth({ isMobile = false, lng }: { isMobile?: boolean , lng:
       
       <LanguageList />
     </>
-  );
+  )
 }

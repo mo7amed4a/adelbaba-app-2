@@ -5,9 +5,9 @@ import { useTranslation as getTranslation } from "@/app/i18n";
 import FooterApp from "@/components/layouts/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/_route";
 import NextTopLoader from "nextjs-toploader";
 import { ChatPageDrawer } from "./(chat)/chat/page";
+import { authOptions } from "@/utils/authOptions";
 
 export async function generateStaticParams() {
   return languages.map((lng) => ({ lng }));
@@ -40,6 +40,8 @@ export default async function RootLayout({
   };
 }) {
   const session = await getServerSession(authOptions);
+  console.log("session", session);
+  
   if (!session) {
     // redirect("/auth/login");
   }

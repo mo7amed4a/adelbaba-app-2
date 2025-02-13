@@ -1,19 +1,18 @@
 import {
   AlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import LinkApp from "@/components/global/LinkApp";
 import Image from "next/image";
 import { X } from "lucide-react";
 
 type AlertAppType = {
+  status?: boolean;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   text: string;
@@ -24,6 +23,7 @@ type AlertAppType = {
 };
 
 export default function AlertApp({
+  status=true,
   isOpen,
   setIsOpen,
   text,
@@ -44,16 +44,16 @@ export default function AlertApp({
           <AlertDialogDescription className="text-center">
             {msg}
           </AlertDialogDescription>
-          <Image
+          {status ? <Image
             className="size-16 md:size-24"
             src="/icons/auth/toast.png"
             width={400}
             height={400}
             alt=""
-          />
+          />: <svg className="size-16 md:size-24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth={0} /><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" /><g id="SVGRepo_iconCarrier"> <path d="M12 8V12" stroke="#CF3F3C" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" /> <path d="M12 16.0195V16" stroke="#CF3F3C" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" /> <circle cx={12} cy={12} r={10} stroke="#CF3F3C" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" /> </g></svg>}
         </AlertDialogHeader>
         <AlertDialogFooter className="w-full">
-          {btnText &&
+          {btnText && status &&
             (url && lng ? (
               <LinkApp
                 href={url}

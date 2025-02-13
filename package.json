@@ -19,6 +19,7 @@
     "i18next-resources-for-ts": "i18next-resources-for-ts interface -i ./app/i18n/locales/en -o ./@types/resources.d.ts"
   },
   "dependencies": {
+    "@formatjs/intl-localematcher": "^0.5.10",
     "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-alert-dialog": "^1.1.2",
     "@radix-ui/react-avatar": "^1.1.1",
@@ -38,6 +39,7 @@
     "@radix-ui/react-switch": "^1.1.1",
     "@radix-ui/react-toast": "^1.2.2",
     "@radix-ui/react-tooltip": "^1.1.3",
+    "@types/negotiator": "^0.6.3",
     "accept-language": "3.0.20",
     "axios": "^1.7.7",
     "class-variance-authority": "^0.7.0",
@@ -50,6 +52,7 @@
     "input-otp": "^1.4.1",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.456.0",
+    "negotiator": "^1.0.0",
     "next": "15.0.2",
     "next-auth": "^4.24.10",
     "nextjs-toploader": "^3.7.15",

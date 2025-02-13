@@ -11,7 +11,7 @@ export default function layout({
     params,
 }: {
     children: React.ReactNode,
-    params: { lng: string };
+    params: { lng: string }
 }) {
   const lng = params.lng;
 

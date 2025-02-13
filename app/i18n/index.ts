@@ -1,33 +1,22 @@
-import { createInstance, Namespace, FlatNamespace, KeyPrefix } from 'i18next'
+import { createInstance } from 'i18next'
 import resourcesToBackend from 'i18next-resources-to-backend'
 import { initReactI18next } from 'react-i18next/initReactI18next'
-import { FallbackNs } from 'react-i18next'
 import { getOptions } from './settings'
 
-const initI18next = async (lng: string, ns: string | string[]) => {
-  // on server side we create a new instance for each render, because during compilation everything seems to be executed in parallel
+const initI18next = async (lng:any, ns: any) => {
+  // Create a new instance for each render on the server side
   const i18nInstance = createInstance()
   await i18nInstance
     .use(initReactI18next)
-    .use(resourcesToBackend((language: string, namespace: string) => import(`./locales/${language}/${namespace}.json`)))
+    .use(resourcesToBackend((language:any) => import(`./locales/${language}.json`))) // كل لغة في ملف واحد
     .init(getOptions(lng, ns))
   return i18nInstance
 }
 
-type $Tuple<T> = readonly [T?, ...T[]];
-type $FirstNamespace<Ns extends Namespace> = Ns extends readonly any[] ? Ns[0] : Ns;
-
-export async function useTranslation<
-  Ns extends FlatNamespace | $Tuple<FlatNamespace>,
-  KPrefix extends KeyPrefix<FallbackNs<Ns extends FlatNamespace ? FlatNamespace : $FirstNamespace<FlatNamespace>>> = undefined
->(
-  lng: string,
-  ns?: Ns,
-  options: { keyPrefix?: KPrefix } = {}
-) {
-  const i18nextInstance = await initI18next(lng, Array.isArray(ns) ? ns as string[] : ns as string)
+export async function useTranslation(lng:any, ns?:any, options:any = {}) {
+  const i18nextInstance = await initI18next(lng, Array.isArray(ns) ? ns : ns)
   return {
-    t: Array.isArray(ns) ? i18nextInstance.getFixedT(lng, ns[0], options.keyPrefix) : i18nextInstance.getFixedT(lng, ns as FlatNamespace, options.keyPrefix),
+    t: Array.isArray(ns) ? i18nextInstance.getFixedT(lng, ns[0], options.keyPrefix) : i18nextInstance.getFixedT(lng, ns, options.keyPrefix),
     i18n: i18nextInstance
   }
 }

@@ -1,7 +1,6 @@
 "use client";
 import AlertApp from "@/components/auth/AlertApp";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 
 import {
   InputOTP,
@@ -9,21 +8,51 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import AxiosApp from "@/lib/axios";
 
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
+import { useSearchParams } from "next/navigation";
 import { use, useState } from "react";
 
 export default function LoginForm({
   params,
 }:{
-  params: Promise<{ lng: string }>;
+  params: Promise<{ lng: string, email: string}>;
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const { lng } =  use(params);
+  const [value, setValue] = useState<string|null>(null);
+  const [status, setStatus] = useState<{
+    status: boolean
+    text: string
+    msg: string
+  }|null>();
+
+  const { lng} =  use(params);
+  const email = useSearchParams()
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsOpen(true);
+    try {
+      const result = await AxiosApp.post('/auth/otp', {
+        email: email.get('email'),
+        otp_code: value
+      })
+      if (result.status === 200) {
+        setStatus({
+          status: true,
+          text: "Success",
+          msg: result?.data?.message
+        });
+        setIsOpen(true);
+      }
+    } catch (err: any) {
+      setStatus({
+        status: false,
+        text: "Error",
+        msg: err?.response?.data?.message
+      });
+      setIsOpen(true);
+    }
     
   };
   return (
@@ -31,10 +60,10 @@ export default function LoginForm({
       <h2 className="text-xl md:text-3xl font-bold">Reset Password</h2>
       <p className="text-gray-500 text-xs md:text-base">
         Please Enter The OTP Code Sent To{" "}
-        <span className="underline">Mariam@gmail.com</span>
+        <span className="underline">{email}</span>
       </p>
       <div dir="ltr">
-        <InputOTP maxLength={4} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
+        <InputOTP onChange={(e) => setValue(e)} maxLength={4} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
           <InputOTPGroup>
             <InputOTPSlot className="size-12 md:size-16 text-lg" index={0} />
             <InputOTPSlot className="size-12 md:size-16 text-lg" index={1} />
@@ -46,10 +75,19 @@ export default function LoginForm({
           </InputOTPGroup>
         </InputOTP>
       </div>
-      <Button type="submit" className="w-full py-4 md:py-6 md:text-lg">
+      <Button type="submit" disabled={!value?.length || value?.length < 4} className="w-full py-4 md:py-6 md:text-lg">
         Send a request
       </Button>
-      <AlertApp isOpen={isOpen} setIsOpen={setIsOpen} text={"Success!"} msg={"Your OTP has been sent to your email. Please check your inbox to verify and proceed with resetting your password."} lng={lng} url={`/auth/reset-password`} btnText={"Reset Password"} />
+      {status && <AlertApp 
+        isOpen={isOpen} 
+        setIsOpen={setIsOpen}
+        status={status?.status}
+        text={status?.text} 
+        msg={status?.msg} 
+        lng={lng}
+        url={`/auth/reset-password`}
+        btnText={"Reset Password"} 
+      />}
 
     </form>
   );

@@ -2,6 +2,9 @@ import { dir } from "i18next";
 import { fallbackLng, languages } from "@/app/i18n/settings";
 import { useTranslation as getTranslation } from "@/app/i18n";
 import HeaderApp from "@/components/layouts/Header";
+import { authOptions } from "@/utils/authOptions";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 type ParamsLayoutType = Promise<{ lng: string }>;
 
@@ -28,6 +31,11 @@ export default async function RootLayout({
   params: ParamsLayoutType;
 }) {
   const lng = (await params).lng;
+  const session = await getServerSession(authOptions);
+  
+  if (session) {
+    redirect(`/${lng}`);
+  }
   return (
     <html lang={lng} dir={dir(lng)}>
       <head />
