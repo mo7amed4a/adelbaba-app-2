@@ -4,6 +4,7 @@ import { fallbackLng, languages } from "@/app/i18n/settings";
 import { useTranslation as getTranslation } from "@/app/i18n";
 import FooterApp from "@/components/layouts/Footer";
 import { Toaster } from "@/components/ui/toaster";
+import { Toaster as ToastApp } from "react-hot-toast";
 import { getServerSession } from "next-auth";
 import NextTopLoader from "nextjs-toploader";
 import { ChatPageDrawer } from "./(chat)/chat/page";
@@ -40,7 +41,6 @@ export default async function RootLayout({
   };
 }) {
   const session = await getServerSession(authOptions);
-  console.log("session", session);
   
   if (!session) {
     // redirect("/auth/login");
@@ -51,7 +51,10 @@ export default async function RootLayout({
       <head />
       <body>
         <NextTopLoader color="var(--primary)" />
-        <Toaster />
+        <div className="relative z-[48484817878]">
+          <Toaster />
+          <ToastApp />
+        </div>
         <HeaderApp lng={lng} />
         {children}
         <ChatPageDrawer />

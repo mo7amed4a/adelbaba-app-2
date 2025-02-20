@@ -27,6 +27,7 @@ export default function ProfileSettings({
   const { lng } = use(params);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [image, setImage] = useState<string>("/icons/settings/user.jpeg");
+  const [name, setName] = useState()
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -35,6 +36,10 @@ export default function ProfileSettings({
       setImage(url);
     }
   };
+
+  const changeName = () => {
+
+  }
 
   return (
     <div className="min-h-screen text-gray-700 p-6 max-w-2xl space-y-8">
@@ -61,7 +66,7 @@ export default function ProfileSettings({
       </div>
 
       <div className="space-y-6">
-        <div className="space-y-2">
+        <form className="space-y-2" >
           <Label htmlFor="full-name" className="text-xl">
             Full Name
           </Label>
@@ -71,7 +76,7 @@ export default function ProfileSettings({
               Save
             </Button>
           </div>
-        </div>
+        </form>
 
         <div className="space-y-2">
           <Label htmlFor="email" className="text-xl">

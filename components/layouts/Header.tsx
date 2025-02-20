@@ -121,10 +121,9 @@ export function LinksNavbar({ isMobile = false , lng}: { isMobile?: boolean , ln
 
     const { data: session, status } = useSession()
 
-    console.log(session);
   return (
     <>
-      {status === "authenticated" ? <UserDrop user={session?.user}/>
+      {status === "authenticated" ? <UserDrop user={session?.user} lng={lng}/>
       : <LinkApp lng={lng} 
         href={"/auth/sign-in"}
         className={isMobile ? classForMobile : classForDesktop}

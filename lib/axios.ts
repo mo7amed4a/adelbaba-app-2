@@ -7,22 +7,21 @@ const AxiosApp = axios.create({
 
 AxiosApp.interceptors.request.use(
     (config) => {
-        if (typeof window !== "undefined") {
-            const token = localStorage?.getItem('token') as string;
-            const accessToken = JSON.parse(token);
-            if (accessToken) {
-                if (config.headers) config.headers.token = accessToken;
-            }
-            return config;
-        }
-        else return config
+        // if (typeof window !== "undefined") {
+        //     const token = localStorage?.getItem('token') as string;
+        //     const accessToken = JSON.parse(token);
+        //     if (accessToken) {
+        //         if (config.headers) config.headers.token = accessToken;
+        //     }
+        //     return config;
+        // }
+        return config
     },
     (error) => {
         // Handle request errors here
         return Promise.reject(error);
     }
 );
-
 
 // Axios Interceptor: Response Method
 AxiosApp.interceptors.response.use(
