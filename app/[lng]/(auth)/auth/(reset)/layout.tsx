@@ -6,14 +6,11 @@ const img = "/icons/auth/bg.jpeg";
 
 
 
-export default function layout({
+export default async function layout({
     children,
-    params,
 }: {
     children: React.ReactNode,
-    params: { lng: string }
 }) {
-  const lng = params.lng;
 
   return (
     <div
