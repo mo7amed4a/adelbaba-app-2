@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
-import ChatPage, { ChatPageDrawer } from "@/app/[lng]/(pages)/(chat)/chat/page";
+import ChatPage, { ChatPageDrawer } from "@/app/(pages)/(chat)/chat/page";
 
 export default function ChatDrawer({
     children

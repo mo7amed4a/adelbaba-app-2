@@ -80,7 +80,7 @@ export default function ChangePasswordInput({
       </div>
       <div className="flex items-center mt-2">
         <span>Can&apos;t remember your password? </span>
-        {/* <LinkApp href="/auth/forgot-password" lng={lng}>
+        {/* <LinkApp href="/auth/forgot-password">
           <Button variant="link" className="underline">
             Reset your password
           </Button>

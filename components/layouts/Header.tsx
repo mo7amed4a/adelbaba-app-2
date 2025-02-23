@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Heart, ShoppingCart, UserCircle } from "lucide-react";
+import { Heart, ShoppingCart, UserCircle } from "lucide-react";
 import LanguageList from "./languages";
 import Image from "next/image";
 import React from "react";
@@ -12,14 +12,10 @@ import LinkApp from "../global/LinkApp";
 import { useSession } from "next-auth/react";
 import UserDrop from "./UserDrop";
 
-export default function HeaderApp({
-  lng
-}: {
-  lng: string
-}) {
+export default function HeaderApp() {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
-  const isHome = pathname.split("/").length === 2;
+  const isHome = pathname.split("/").length === 1 || pathname === "/";  
   const isAuth = pathname.includes("auth");
 
   useEffect(() => {
@@ -48,7 +44,7 @@ export default function HeaderApp({
             : "bg-white text-black"
         }`}
       >
-        <LinkApp lng={lng}
+        <LinkApp 
           href="/"
           className="mr-6 hidden lg:flex items-center gap-x-2"
         >
@@ -62,10 +58,10 @@ export default function HeaderApp({
           <h1 className="text-2xl font-bold">AdelBaba.net</h1>
         </LinkApp>
         <nav className="ms-auto hidden lg:flex gap-4 w-auto">
-          {isAuth ? <LinksAuth lng={lng} /> : <LinksNavbar lng={lng}/>}
+          {isAuth ? <LinksAuth  /> : <LinksNavbar />}
         </nav>
         <div className="md:hidden">
-        <LinkApp lng={lng}
+        <LinkApp 
           href="/"
           className="flex items-center gap-x-2"
         >
@@ -79,12 +75,12 @@ export default function HeaderApp({
           <h1 className="text-lg font-bold">AdelBaba.net</h1>
         </LinkApp>
         </div>
-        {isAuth ? <SideBarForAuth lng={lng} /> : <SideBarForApp lng={lng} />}
+        {isAuth ? <SideBarForAuth  /> : <SideBarForApp  />}
 
       </header>
-      {!isHome && !isAuth && (
+      {(!isHome && !isAuth) && (
         <div className={"pt-16"}>
-          <CategoryHeader lng={lng} />
+          <CategoryHeader />
         </div>
       )}
     </div>
@@ -112,7 +108,7 @@ function MenuIcon(props: any) {
   );
 }
 
-export function LinksNavbar({ isMobile = false , lng}: { isMobile?: boolean , lng: string}) {
+export function LinksNavbar({ isMobile = false }: { isMobile?: boolean}) {
   
   const classForMobile =
     "flex gap-x-2 w-full whitespace-nowrap items-center rounded-md p-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50";
@@ -123,22 +119,22 @@ export function LinksNavbar({ isMobile = false , lng}: { isMobile?: boolean , ln
 
   return (
     <>
-      {status === "authenticated" ? <UserDrop user={session?.user} lng={lng}/>
-      : <LinkApp lng={lng} 
+      {status === "authenticated" ? <UserDrop user={session?.user} />
+      : <LinkApp  
         href={"/auth/sign-in"}
         className={isMobile ? classForMobile : classForDesktop}
       >
         <UserCircle className="size-8 md:size-5" />
         <span className="w-auto">Sign in / Sign up</span>
       </LinkApp>}
-        <LinkApp lng={lng}
+        <LinkApp 
           href={"/cart"}
           className={isMobile ? classForMobile : classForDesktop}
         >
           <ShoppingCart className="size-8 md:size-5" />
           <span>Cart</span>
         </LinkApp>
-      <LinkApp lng={lng}
+      <LinkApp 
         href={"/wishlist"}
         className={isMobile ? classForMobile : classForDesktop}
       >
@@ -150,11 +146,7 @@ export function LinksNavbar({ isMobile = false , lng}: { isMobile?: boolean , ln
   );
 }
 
-function SideBarForApp({
-  lng
-}: {
-  lng: string
-}) {
+function SideBarForApp() {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -164,7 +156,7 @@ function SideBarForApp({
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="z-[81781454718]">
-        <LinkApp lng={lng}
+        <LinkApp 
           href="/"
           className="mr-6 flex items-center gap-x-2"
           
@@ -179,18 +171,14 @@ function SideBarForApp({
           <h1 className="text-xl font-bold">AdelBaba.net</h1>
         </LinkApp>
         <div className="grid gap-2 py-6">
-          <LinksNavbar lng={lng} isMobile />
+          <LinksNavbar  isMobile />
         </div>
       </SheetContent>
     </Sheet>
   );
 }
 
-function SideBarForAuth({
-  lng
-}: {
-  lng: string
-}) {
+function SideBarForAuth() {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -200,7 +188,7 @@ function SideBarForAuth({
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="z-[81781454718]">
-        <LinkApp lng={lng}
+        <LinkApp 
           href="/"
           className="mr-6 flex items-center gap-x-2"
           
@@ -215,14 +203,14 @@ function SideBarForAuth({
           <h1 className="text-xl font-bold">AdelBaba.net</h1>
         </LinkApp>
         <div className="grid gap-2 py-6">
-          <LinksAuth lng={lng}/>
+          <LinksAuth />
         </div>
       </SheetContent>
     </Sheet>
   );
 }
 
-export function LinksAuth({ isMobile = false, lng }: { isMobile?: boolean , lng: string}) {
+export function LinksAuth({ isMobile = false }: { isMobile?: boolean}) {
   const pathname = usePathname()
   const classForMobile =
     "flex gap-x-2 w-full whitespace-nowrap items-center rounded-md p-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50";
@@ -234,7 +222,7 @@ export function LinksAuth({ isMobile = false, lng }: { isMobile?: boolean , lng:
 
   return (
     <> 
-      {(pathname.includes('sign-up') || pathname.includes('sign-in')) ? <LinkApp lng={lng}
+      {(pathname.includes('sign-up') || pathname.includes('sign-in')) ? <LinkApp 
         href={"/auth/become-a-seller"}
         // className={isMobile ? classForMobile : classForDesktop}
         >
@@ -242,7 +230,7 @@ export function LinksAuth({ isMobile = false, lng }: { isMobile?: boolean , lng:
         <span className="w-auto">Become a Seller</span>
       </Button>
       </LinkApp>: 
-          <LinkApp lng={lng}
+          <LinkApp 
           href={"/auth/sign-in"}
           // className={isMobile ? classForMobile : classForDesktop}
           >

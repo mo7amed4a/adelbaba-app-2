@@ -1,43 +1,30 @@
+import { ProductType } from '@/@types/api/product';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
 export interface ProductCardProps {
-  id: number;
-  image: string;
-  title: string;
-  price: string; 
-  oldPrice?: string; 
-  category: string;
-  rating: number; 
-  sale?: boolean;
+  product: ProductType
   isCarousel?: boolean
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
-  id,
-  image,
-  title,
-  price,
-  oldPrice,
-  category,
-  rating,
-  sale,
+  product,
   isCarousel=true
 }) => {
   return (
-    <Link href={`/products/${id}/`}>
+    <Link href={`/products/${product?.id}/`}>
       <article className="relative">
         <div className={`${"aspect-square" } overflow-hidden items-center h-32
          md:h-52 w-full bg-gray-100`}>
           <Image
             height={500} width={500}
             className="group-hover:scale-125 w-full h-full object-contain transition-all duration-300"
-            src={image}
-            alt={title}
+            src={product?.image}
+            alt={product?.name}
           />
         </div>
-        {sale && (
+        {product?.sale && (
           <div className="absolute top-0 m-1 rounded-full bg-white">
             <p className="text-[10px] rounded-full bg-primary-500 p-1 font-bold uppercase tracking-wide text-primary sm:px-3 sm:py-1">
               Sale
@@ -47,12 +34,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <div className="mt-4 flex items-start justify-between">
           <div>
             <h4 className="text-xs sm:text-sm text-gray-500">
-              <Link href={`/categories/${category}`} title={title} className="cursor-pointer text-gray-400">
-                {category}
+              <Link href={`/categories/${product?.category}`} title={product?.name} className="cursor-pointer text-gray-400">
+                {product?.category}
               </Link>
             </h4>
             <h3 className="font-semibold text-xs sm:text-base md:text-lg text-gray-500">
-              <span className="cursor-pointer">{title}</span>
+              <span className="cursor-pointer">{product?.name}</span>
             </h3>
           </div>
           <div className="text-end flex flex-col items-end">
@@ -61,7 +48,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 <svg
                   key={index}
                   className={`block h-3 w-3 align-middle ${
-                    index < rating ? 'text-yellow-500' : 'text-gray-400'
+                    index < (product?.rating || 4) ? 'text-yellow-500' : 'text-gray-400'
                   } sm:h-4 sm:w-4`}
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
@@ -72,13 +59,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
               ))}
             </div>
             <div className='flex gap-x-2 items-center'>
-              {oldPrice && (
+              {product?.oldPrice && (
                 <del className="mt-px text-xs sm:font-semibold text-gray-400 sm:text-sm">
-                  {oldPrice}
+                  {product?.oldPrice}
                 </del>
               )}
               <p className="text-xs sm:text-sm md:text-base text-primary font-bold">
-                {price}
+                {product?.price}
               </p>
             </div>
           </div>

@@ -1,4 +1,4 @@
-
+"use client"
 
 import { cn } from "@/lib/utils"
 
@@ -17,14 +17,11 @@ import { Button } from "../ui/button"
 import IconLeftAndRight from "../global/IconLeftAndRight"
 import img1 from '/public/icons/category/3.png'
 import CategoryCardForHeader from "../categories/CategoryCardForHeader"
+import { usePathname } from "next/navigation"
 
-export function CategoryHeader({
-    isHome=false,
-    lng
-}:{
-    isHome?: boolean,
-    lng: string
-}) {
+export function CategoryHeader() {
+  const pathname = usePathname();
+    const isHome = pathname.split("/").length === 1 || pathname === "/";
     const categories = [
       { id: 2, name: "New in", url: "new-in" },
       { id: 3, name: "Sale", url: "sale" },
@@ -38,7 +35,7 @@ export function CategoryHeader({
     ]
     
     return (
-      <NavigationMenu className="z-50 relative hidden lg:block w-[95vw] max-w-full" dir="ltr">
+      <NavigationMenu className={`z-50 relative hidden lg:block w-[95vw] max-w-full`} dir="ltr">
         <NavigationMenuList className="flex">
           <NavigationMenuItem className="">
             <NavigationMenuTrigger className={` ${!isHome && '!text-black'}`}>All Categories</NavigationMenuTrigger>
@@ -63,7 +60,7 @@ export function CategoryHeader({
             </NavigationMenuContent>
           </NavigationMenuItem>
           {categories && categories.length > 0 && categories.map(item => <NavigationMenuItem key={item.id}>
-            <LinkApp href={`/categories/${item.url}`} lng={lng}>
+            <LinkApp href={`/categories/${item.url}`} >
               <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${!isHome && '!text-black'}`}>
                 {item.name}
               </NavigationMenuLink>

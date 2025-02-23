@@ -1,4 +1,3 @@
-import { ProductType } from "@/@types/api/product";
 import IconLeftAndRight from "@/components/global/IconLeftAndRight";
 import ProductCard from "@/components/products/product";
 import {
@@ -6,7 +5,6 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import AxiosServer from "@/lib/axiosServer";
 import { splitTitleInHalf } from "@/utils/splitArrayInHalf";
 import Link from "next/link";
 import React from "react";
@@ -16,22 +14,17 @@ interface ProductSectionProps {
   title: string;
   linkAll: string;
   isCarousel?: boolean;
+  products: any
 }
 
-export default async function ProductSection({
+export default function productsSectionClient({
   title,
   linkAll,
   isCarousel = true,
+  products
 }: ProductSectionProps) {
   const [firstTitle, secondTitle] = splitTitleInHalf(title);
-  let products:any = []
-  try {
-    const res = await AxiosServer.get('/customer/products')
-    products = res?.data?.products    
-  } catch (error) {
-    console.log(error);
-  }
-  
+
   return (
     <section className="py-12 bg-white dark:bg-gray-800 dark:text-white">
       <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
@@ -52,7 +45,7 @@ export default async function ProductSection({
         </div>
         {isCarousel ? <Carousel className="mt-8">
           <CarouselContent>
-            {products && products?.length > 0 && products?.map((product:any, index:any) => (
+            {products.map((product:any, index:any) => (
               <CarouselItem key={index} className="basis-1/2 lg:basis-1/4">
                 <ProductCard {...product} />
               </CarouselItem>
@@ -60,9 +53,9 @@ export default async function ProductSection({
           </CarouselContent>
         </Carousel> : 
         <div className="mt-10 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          {products && products?.length > 0 && products?.map((item:ProductType) => (
+          {products.map((item:any) => (
             <div key={item.id}>
-              <ProductCard isCarousel={isCarousel} product={item}/>
+              <ProductCard isCarousel={isCarousel} {...item}/>
             </div>
             ))}
         </div>

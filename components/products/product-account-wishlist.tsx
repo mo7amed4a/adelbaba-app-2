@@ -2,12 +2,12 @@ import React from "react";
 import { Button } from "../ui/button";
 import { Heart, ShoppingCart } from "lucide-react";
 import Image from "next/image";
-import { ProductCardProps } from "./product";
+import { ProductType } from "@/@types/api/product";
 
 export default function ProductAccountWishlist({
   product
 }: {
-  product: ProductCardProps
+  product: ProductType
 }) {
   return (
     <article className="h-full relative flex flex-col overflow-hidden border">
@@ -39,7 +39,7 @@ export default function ProductAccountWishlist({
               ))}
         </div>
         <div>
-          <h3 className="line-clamp-1 w-full text-gray-600">{product.title}</h3>
+          <h3 className="line-clamp-1 w-full text-gray-600">{product.name}</h3>
         </div>
         <div className="flex justify-between w-full">
           <div className="flex items-center">

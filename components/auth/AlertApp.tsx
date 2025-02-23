@@ -17,7 +17,6 @@ type AlertAppType = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   text: string;
   msg: string;
-  lng?: string;
   url?: string;
   btnText?: string;
 };
@@ -28,7 +27,6 @@ export default function AlertApp({
   setIsOpen,
   text,
   msg,
-  lng,
   url,
   btnText,
 }: AlertAppType) {
@@ -54,10 +52,10 @@ export default function AlertApp({
         </AlertDialogHeader>
         <AlertDialogFooter className="w-full">
           {btnText && status &&
-            (url && lng ? (
+            (url ? (
               <LinkApp
                 href={url}
-                lng={lng}
+               
                 className="w-full flex justify-center items-center"
               >
                 <AlertDialogAction className="w-2/4">

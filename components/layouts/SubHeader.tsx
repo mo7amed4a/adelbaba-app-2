@@ -3,11 +3,8 @@ import React from 'react'
 import { CategoryHeader } from './category-header'
 import SubHeaderInput from './SubHeaderInput'
 
-export default function SubHeader({
-  lng
-}: {
-  lng: string
-}) {
+export default function SubHeader() {
+  
   return (
     <div className="pt-6 -mt-16 h-96 flex flex-col justify-center items-center relative">
         <Image
@@ -19,7 +16,7 @@ export default function SubHeader({
         />
         <div className="absolute bg-gray-950 bg-opacity-80 inset-0"></div>
         <div className='relative z-auto'>
-          <CategoryHeader lng={lng} isHome/>
+          <CategoryHeader />
         </div>
         <div className="w-full flex justify-center items-center mt-10">
           <SubHeaderInput />

@@ -1,3 +1,4 @@
+import { CategoriesType } from "@/@types/api/categories";
 import CategoryCard from "@/components/categories/category";
 import IconLeftAndRight from "@/components/global/IconLeftAndRight";
 import {
@@ -22,8 +23,13 @@ export default async function CategoriesSection({
   linkAll,
   isHome = false
 }: CategoriesSectionProps) {
-  const res = await AxiosServer.get('/customer/categories')
-  const categories = res?.data?.categories;
+  let categories:any = []
+  try {
+    const res = await AxiosServer.get('/customer/categories')
+    categories = res?.data?.categories;
+  } catch (error) {
+    console.log(error);
+  }
 
   const [firstHalf, secondHalf] = splitArrayInHalf(categories);
   const [firstTitle, secondTitle] = splitTitleInHalf(title);
@@ -51,27 +57,27 @@ export default async function CategoriesSection({
         {isHome ? <>
           <Carousel className="mt-8">
             <CarouselContent>
-              {firstHalf.map((category) => (
+              {firstHalf.map((category: CategoriesType) => (
                 <CarouselItem key={category.id} className="basis-1/7">
-                  <CategoryCard {...category} isHome={isHome} />
+                  <CategoryCard category={category} isHome={isHome} />
                 </CarouselItem>
               ))}
             </CarouselContent>
           </Carousel>
           <Carousel>
               <CarouselContent>
-                {secondHalf.map((item) => (
-                  <CarouselItem key={item.id} className="basis-1/7">
-                    <CategoryCard {...item} isHome={isHome}/>
+                {secondHalf.map((category: CategoriesType) => (
+                  <CarouselItem key={category.id} className="basis-1/7">
+                    <CategoryCard category={category} isHome={isHome}/>
                   </CarouselItem>
                 ))}
               </CarouselContent>
           </Carousel>
         </> : <>
         <div className="mt-10 flex flex-wrap justify-center">
-          {categories.map((item: any) => (
-            <div key={item.id} className="basis-1/6">
-              <CategoryCard {...item}/>
+          {categories.map((category: CategoriesType) => (
+            <div key={category.id} className="basis-1/6">
+              <CategoryCard category={category}/>
             </div>
             ))}
         </div>

@@ -3,11 +3,8 @@ import * as React from "react"
 import {
   Carousel,
   CarouselContent,
-  CarouselNext,
-  CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel"
-import { useParams } from "next/navigation"
 
 
 function CustomCarousel({
@@ -18,7 +15,6 @@ children
   const [api, setApi] = React.useState<CarouselApi>()
   const [current, setCurrent] = React.useState(0)
   const [count, setCount] = React.useState(0)
-  const {lng} = useParams();
 
   React.useEffect(() => {
     if (!api) {
@@ -44,7 +40,7 @@ children
       <Carousel
         setApi={setApi}
         className="w-full"
-        opts={{ loop: true, direction: lng === "ar" ? "rtl" : "ltr" }}
+        opts={{ loop: true, direction: "ltr" }}
       >
         <CarouselContent className="flex relative" >
             {children}

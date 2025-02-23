@@ -4,42 +4,42 @@ import { SidebarGroup } from "../ui/sidebar";
 import { usePathname } from "next/navigation";
 import LinkApp from "../global/LinkApp";
 
-export default function AccountSidebarLinks({ lng }: { lng: string }) {
+export default function AccountSidebarLinks() {
   const pathname = usePathname();
   return (
     <div className="text-sm cursor-pointer previous-orders py-4">
       <SidebarGroup
         className={pathname.includes("/account/overview") ? "active" : ""}
       >
-        <LinkApp href="/account/overview" lng={lng}>
+        <LinkApp href="/account/overview">
           Overview
         </LinkApp>
       </SidebarGroup>
       <SidebarGroup
         className={pathname.includes("/account/purchases") ? "active" : ""}
       >
-        <LinkApp href="/account/purchases" lng={lng}>
+        <LinkApp href="/account/purchases">
           Track Purchases
         </LinkApp>
       </SidebarGroup>
       <SidebarGroup
         className={pathname.includes("/account/support") ? "active" : ""}
       >
-        <LinkApp href="/account/support" lng={lng}>
+        <LinkApp href="/account/support">
           Support
         </LinkApp>
       </SidebarGroup>
       <SidebarGroup
         className={pathname.includes("/account/settings") ? "active" : ""}
       >
-        <LinkApp href="/account/settings" lng={lng}>
+        <LinkApp href="/account/settings">
           Settings
         </LinkApp>
       </SidebarGroup>
       <SidebarGroup
         className={pathname.includes("/account/seller") ? "active" : ""}
       >
-        <LinkApp href="/account/seller" lng={lng}>
+        <LinkApp href="/account/seller">
           Become a seller
         </LinkApp>
       </SidebarGroup>

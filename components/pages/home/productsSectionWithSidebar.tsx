@@ -1,4 +1,5 @@
-import ProductCard, { ProductCardProps } from "@/components/products/product";
+import { ProductType } from "@/@types/api/product";
+import ProductCard from "@/components/products/product";
 import ProductPrimary from "@/components/products/product-primary";
 import {
   Carousel,
@@ -9,13 +10,20 @@ import { splitTitleInHalf } from "@/utils/splitArrayInHalf";
 import Link from "next/link";
 import React from "react";
 
-const productsData: ProductCardProps[] = [
+
+const productsData: ProductType[] = [
   {
     id: 1,
     image: "/icons/products/1.png",
-    title: "Laptop v23",
-    price: "300$",
-    oldPrice: "559$",
+    name: "Laptop v23",
+    description: "Laptop v23",
+    default_price: 300,
+    quantity: 1,
+    status: "active",
+    created_at: "2023-01-01",
+    updated_at: "2023-01-01",
+    price: 300,
+    oldPrice: 559,
     rating: 4,
     category: "Electronics",
     sale: true,
@@ -23,9 +31,15 @@ const productsData: ProductCardProps[] = [
   {
     id: 2,
     image: "/icons/products/2.png",
-    title: "Airpods pro",
-    price: "300$",
-    oldPrice: "559$",
+    name: "Laptop v23",
+    description: "Laptop v23",
+    default_price: 300,
+    quantity: 1,
+    status: "active",
+    created_at: "2023-01-01",
+    updated_at: "2023-01-01",
+    price: 300,
+    oldPrice: 559,
     rating: 4,
     category: "Electronics",
     sale: true,
@@ -33,9 +47,15 @@ const productsData: ProductCardProps[] = [
   {
     id: 3,
     image: "/icons/products/3.png",
-    title: "instax camera",
-    price: "300$",
-    oldPrice: "559$",
+    name: "Laptop v23",
+    description: "Laptop v23",
+    default_price: 300,
+    quantity: 1,
+    status: "active",
+    created_at: "2023-01-01",
+    updated_at: "2023-01-01",
+    price: 300,
+    oldPrice: 559,
     rating: 4,
     category: "Electronics",
     sale: true,
@@ -43,9 +63,15 @@ const productsData: ProductCardProps[] = [
   {
     id: 4,
     image: "/icons/products/4.png",
-    title: "Ipad pro",
-    price: "300$",
-    oldPrice: "559$",
+    name: "Laptop v23",
+    description: "Laptop v23",
+    default_price: 300,
+    quantity: 1,
+    status: "active",
+    created_at: "2023-01-01",
+    updated_at: "2023-01-01",
+    price: 300,
+    oldPrice: 559,
     rating: 4,
     category: "Electronics",
     sale: true,
@@ -53,9 +79,15 @@ const productsData: ProductCardProps[] = [
   {
     id: 5,
     image: "/icons/products/5.png",
-    title: "Macbook",
-    price: "300$",
-    oldPrice: "559$",
+    name: "Laptop v23",
+    description: "Laptop v23",
+    default_price: 300,
+    quantity: 1,
+    status: "active",
+    created_at: "2023-01-01",
+    updated_at: "2023-01-01",
+    price: 300,
+    oldPrice: 559,
     rating: 4,
     category: "Electronics",
     sale: true,
@@ -63,9 +95,15 @@ const productsData: ProductCardProps[] = [
   {
     id: 6,
     image: "/icons/products/6.png",
-    title: "smart charger",
-    price: "300$",
-    oldPrice: "559$",
+    name: "Laptop v23",
+    description: "Laptop v23",
+    default_price: 300,
+    quantity: 1,
+    status: "active",
+    created_at: "2023-01-01",
+    updated_at: "2023-01-01",
+    price: 300,
+    oldPrice: 559,
     rating: 4,
     category: "Electronics",
     sale: true,
@@ -74,7 +112,7 @@ const productsData: ProductCardProps[] = [
 
 interface ProductSectionProps {
   title?: string;
-  products?: ProductCardProps[];
+  products?: ProductType[];
   linkAll: string;
   isCarousel?: boolean;
 }

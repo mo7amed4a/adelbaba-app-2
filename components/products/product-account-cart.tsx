@@ -1,20 +1,19 @@
 import React from "react";
 import { Button } from "../ui/button";
-import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
-import { ProductCardProps } from "./product";
+import { ProductType } from "@/@types/api/product";
 
 export default function ProductAccountCart({
   product
 }: {
-  product: ProductCardProps
+  product: ProductType
 }) {
   return (
     <article className="h-full relative flex flex-col overflow-hidden border">
       <div className="overflow-hidden h-auto">
         <Image width={200} height={200}
           className="h-full w-full object-contain transition-all duration-300 group-hover:scale-125"
-          src={product.image}
+          src={product?.image}
           alt="Product"
         />
       </div>
@@ -23,12 +22,12 @@ export default function ProductAccountCart({
   </div> */}
       <div className="my-4 mx-auto flex w-full px-3 flex-col items-start justify-between">
         <div className="flex justify-between w-full">
-          <h3 className="text-xs text-gray-400 w-full">{product.category}</h3>
+          <h3 className="text-xs text-gray-400 w-full">{product?.category}</h3>
           {[...Array(5)].map((_, index) => (
                 <svg
                   key={index}
                   className={`block h-3 w-3 align-middle ${
-                    index < product.rating ? 'text-yellow-500' : 'text-gray-400'
+                    index < product?.rating ? 'text-yellow-500' : 'text-gray-400'
                   } sm:h-5 sm:w-5`}
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
@@ -39,12 +38,12 @@ export default function ProductAccountCart({
               ))}
         </div>
         <div>
-          <h3 className="line-clamp-1 w-full text-gray-600">{product.title}</h3>
+          <h3 className="line-clamp-1 w-full text-gray-600">{product?.name}</h3>
         </div>
         <div className="flex justify-between w-full">
           <div className="flex items-center">
-            <del className="text-xs text-gray-400"> {product.oldPrice} </del>
-            <p className="ms-1 text-sm  md:text-base font-semibold text-primary">{product.price}</p>
+            <del className="text-xs text-gray-400"> {product?.oldPrice} </del>
+            <p className="ms-1 text-sm  md:text-base font-semibold text-primary">{product?.price}</p>
           </div>
           <Button size={"sm"} className="4xl:h-9 4xl:px-4 4xl:py-2 rounded-full bg-transparent sm:bg-primary md:bg-transparent xl:bg-primary shadow-none">
             <span className="hidden sm:block md:hidden 4xl:block">Check out</span>

@@ -19,7 +19,8 @@ AxiosServer.interceptors.request.use(
     },
     (error) => {
         // Handle request errors here
-        return Promise.reject(error);
+        console.log(error);
+        // return Promise.reject(error);
     }
 );
 
@@ -31,7 +32,8 @@ AxiosServer.interceptors.response.use(
     },
     (error) => {
         // Handle response errors here
-        return Promise.reject(error);
+        console.log(error);
+        // return Promise.reject(error);
     }
 );
 

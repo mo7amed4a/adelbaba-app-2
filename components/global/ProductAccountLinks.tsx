@@ -3,7 +3,7 @@ import React from "react";
 import LinkApp from "./LinkApp";
 import { usePathname } from "next/navigation";
 
-export default function ProductAccountLinks({ lng }: { lng: string }) {
+export default function ProductAccountLinks() {
   const pathname = usePathname();
   const active = "text-primary-foreground border-b-2 border-primary";
   return (
@@ -11,7 +11,7 @@ export default function ProductAccountLinks({ lng }: { lng: string }) {
       <div className="col-span-1">
         <LinkApp
           href="/account/overview"
-          lng={lng}
+         
           className={`text-nowrap md:text-xl text-start w-full`}
         >
           <span className={pathname.endsWith("account/overview") ? active : ""}>
@@ -22,7 +22,7 @@ export default function ProductAccountLinks({ lng }: { lng: string }) {
       <div className="col-span-1 flex items-center">
         <LinkApp
           href="/account/overview/cart"
-          lng={lng}
+         
           className={`text-nowrap md:text-xl text-center w-full`}
         >
           <span className={pathname.endsWith("cart") ? active : ""}>Cart</span>
@@ -31,7 +31,7 @@ export default function ProductAccountLinks({ lng }: { lng: string }) {
       <div className="col-span-1 flex justify-end">
         <LinkApp
           href="/account/overview/wishlist"
-          lng={lng}
+         
           className={`text-notext-xlwrap md:text-xl text-end w-full 
            
           `}

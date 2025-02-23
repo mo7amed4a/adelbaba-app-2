@@ -1,5 +1,4 @@
 "use client";
-import { languages } from "@/app/i18n/settings";
 import React from "react";
 import {
   DropdownMenu,
@@ -14,6 +13,7 @@ import { useRouter } from "next/navigation";
 
 export default function LanguageList() {
   const router = useRouter();
+  const languages = ["en"]
   return (
     <>
       <DropdownMenu>

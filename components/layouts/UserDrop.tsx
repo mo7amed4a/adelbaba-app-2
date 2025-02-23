@@ -5,15 +5,12 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { ChevronDown } from 'lucide-react';
 import { Button } from '../ui/button';
 import { signOut } from 'next-auth/react';
-import Link from 'next/link';
 import LinkApp from '../global/LinkApp';
 
 export default function UserDrop({
     user,
-    lng
 }:{
     user: any,
-    lng: string
 }) {
 
   return (
@@ -32,7 +29,7 @@ export default function UserDrop({
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <LinkApp href="/account/settings" lng={lng}>
+        <LinkApp href="/account/settings" >
           <DropdownMenuItem>profile</DropdownMenuItem>
         </LinkApp>
         <DropdownMenuSeparator />

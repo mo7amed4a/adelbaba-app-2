@@ -1,10 +1,11 @@
-import { categoryCardProps } from "@/components/categories/category";
 
-export function splitArrayInHalf(arr: categoryCardProps[]): [categoryCardProps[], categoryCardProps[]] {
-  const middleIndex = Math.ceil(arr.length / 2);
-  const firstHalf = arr.slice(0, middleIndex);
-  const secondHalf = arr.slice(middleIndex, arr.length);
-  return [firstHalf, secondHalf];
+export function splitArrayInHalf(arr: []): [any[], any[]] {
+  if (arr?.length > 0) {
+    const middleIndex = Math.ceil(arr.length / 2);
+    const firstHalf = arr.slice(0, middleIndex);
+    const secondHalf = arr.slice(middleIndex, arr.length);
+    return [firstHalf, secondHalf];
+  } else return [[], []];
 }
 
 export function splitTitleInHalf(arr: string): [string, string] {

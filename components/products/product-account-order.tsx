@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { Badge } from "../ui/badge";
-import { ProductOrderType } from "@/app/[lng]/(pages)/account/overview/page";
+import { ProductOrderType } from "@/app/(pages)/account/overview/page";
 
 export default function ProductAccountOrder({
   product
@@ -42,7 +42,7 @@ export default function ProductAccountOrder({
               ))}
         </div>
         <div>
-          <h3 className="line-clamp-1 w-full text-gray-600">{product.title}</h3>
+          <h3 className="line-clamp-1 w-full text-gray-600">{product.name}</h3>
         </div>
         <div className="flex justify-between w-full">
           <div className="flex items-center">
