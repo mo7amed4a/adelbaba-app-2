@@ -41,21 +41,7 @@ export interface ProductDetailsProps {
   isCarousel?: boolean;
 }
 
-const productDetails: ProductDetailsProps = {
-  id: 1,
-  image: "/icons/products/1.png",
-  title: "Laptop v23",
-  price: "300$",
-  oldPrice: "559$",
-  rating: 3,
-  category: "Electronics",
-  sale: true,
-  images: [
-    { url: "/icons/products/1.png", alt: "Image 1" },
-    { url: "/icons/products/2.png", alt: "Image 2" },
-    { url: "/icons/products/3.png", alt: "Image 3" },
-  ],
-};
+
 
 export const dynamic = "force-dynamic"
 
@@ -67,21 +53,55 @@ export default function Page({
   }>
 }) {
   const id = use(params).id
-  const [selectedImage, setSelectedImage] = useState(
-    productDetails.images[0].url
-  );
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [product, setProduct] = useState<ProductType|null>(null)
-  const fitchProduct = async() => {
+  const [loading, setLoading] = useState(true); // Add loading state
+  const [productDetails, setProductDetails] =useState({
+    id: 1,
+    image: "/icons/products/1.png",
+    title: "Laptop v23",
+    price: "300$",
+    oldPrice: "559$",
+    rating: 3,
+    category: "Electronics",
+    sale: true,
+    images: [
+      { url: "/icons/products/1.png", alt: "Image 1" },
+      { url: "/icons/products/2.png", alt: "Image 2" },
+    ],
+  })
+
+  const fetchProduct = async () => {
     try {
-      const res = await AxiosApp.get(`/products/${id}`)
-      setProduct(res?.data?.data)
+      setLoading(true); // Set loading to true before fetching
+      const res = await AxiosApp.get(`/products/${id}`);
+      setProduct(res?.data?.data);
+      productDetails.images.push({
+        url: res?.data?.data?.image,
+        alt: "image 3"
+      })
+      productDetails.images.reverse()
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false); // Set loading to false after fetching (success or error)
     }
-  }
+  };
+
   useEffect(() => {
-    fitchProduct() 
+    fetchProduct() 
   }, [id])
+
+   // Show loading spinner while data is being fetched
+   if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <h2 className="text-xl">Loading...
+          <span className="size-10 bg-primary rounded-full"></span>
+        </h2>
+      </div>
+    );
+  }
   
   return product &&(
     <div className="max-w-[95rem] px-4 mx-auto dark:text-white mt-20 space-y-10 mb-10">
@@ -114,7 +134,7 @@ export default function Page({
             width={1000}
             height={1000}
             className="h-full w-full object-contain"
-            src={selectedImage}
+            src={selectedImage || product.image}
             alt="Selected Product Image"
           />
         </div>
@@ -406,5 +426,5 @@ export default function Page({
         linkAll="/categories/Hardware"
       />
     </div>
-  );
+  )
 }
