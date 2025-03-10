@@ -1,5 +1,4 @@
 import { ProductType } from "@/@types/api/product";
-import { ProductCardProps } from "@/components/products/product";
 import ProductAccountOrder from "@/components/products/product-account-order";
 
 export interface ProductOrderType  extends ProductType {
@@ -7,7 +6,7 @@ export interface ProductOrderType  extends ProductType {
 }
 
 
-const productsData: ProductOrderType[] = [
+const productsData: any[] = [
   {
     id: 1,
     image: "/icons/products/1.png",

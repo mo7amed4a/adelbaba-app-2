@@ -11,29 +11,50 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import LinkApp from "../global/LinkApp"
 import { Button } from "../ui/button"
 import IconLeftAndRight from "../global/IconLeftAndRight"
 import img1 from '/public/icons/category/3.png'
 import CategoryCardForHeader from "../categories/CategoryCardForHeader"
 import { usePathname } from "next/navigation"
+import AxiosApp from "@/lib/axios"
+import { CategoriesType } from "@/@types/api/categories"
 
 export function CategoryHeader() {
   const pathname = usePathname();
     const isHome = pathname.split("/").length === 1 || pathname === "/";
-    const categories = [
-      { id: 2, name: "New in", url: "new-in" },
-      { id: 3, name: "Sale", url: "sale" },
-      { id: 4, name: "Electronics", url: "electronics" },
-      { id: 5, name: "Screens", url: "screens" },
-      { id: 6, name: "Speakers", url: "speakers" },
-      { id: 7, name: "Covers", url: "covers" },
-      { id: 8, name: "Cables", url: "cables" },
-      { id: 9, name: "Chargers", url: "chargers" },
-      { id: 10, name: "Others", url: "others" }
-    ]
-    
+    const [categories, setCategories] = useState<CategoriesType[]>([])
+    const [subCategoriesId, setSubCategoriesId] = useState<number>(1)
+    const [subCategories, setSubCategories] = useState<CategoriesType[]>([])
+    const fetchCategories = async () => {
+      try {
+        const response = await AxiosApp.get("/categories");
+        const data = response?.data?.data
+        setCategories(data);
+        return data;
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+        return [];
+      }
+    }
+    const fetchSubCategories = async () => {
+      try {
+        const response = await AxiosApp.get(`/categories/${subCategoriesId}/subcategories`);
+        const data = response?.data?.data
+        setSubCategories(data);
+        return data;
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+        return [];
+      }
+    }
+    useEffect(() => {
+      fetchCategories()
+    }, [])
+    useEffect(() => {
+      fetchSubCategories()
+    }, [subCategoriesId])
     return (
       <NavigationMenu className={`z-50 relative hidden lg:block w-[95vw] max-w-full`} dir="ltr">
         <NavigationMenuList className="flex">
@@ -41,26 +62,26 @@ export function CategoryHeader() {
             <NavigationMenuTrigger className={` ${!isHome && '!text-black'}`}>All Categories</NavigationMenuTrigger>
             <NavigationMenuContent className="flex gap-4 p-4 md:w-[95vw]">
               <div className="w-[300px]">
-                {categories.map((item, index) => <Button key={index} variant={'ghost'} className="w-full flex justify-between h-14 rounded-none">
+                {categories.map((item, index) => <Button onClick={() => setSubCategoriesId(item.id)} onMouseEnter={() => setSubCategoriesId(item.id)} key={index} variant={'ghost'} className="w-full flex justify-between h-14 rounded-none">
                   <span>{item.name}</span>
                   <IconLeftAndRight className="!size-7 text-gray-400"/>
                 </Button>)}
               </div>
-              <div className="w-[300px]">
-                {[...Array(3)].map((e, index) => <Button key={index} variant={'ghost'} className="w-full flex justify-between h-14 rounded-none">
-                  <span>Male</span>
+              {/* <div className="w-[300px]">
+                { subCategories && subCategories.length > 0 && subCategories.map((e, index) => <Button key={index} variant={'ghost'} className="w-full flex justify-between h-14 rounded-none">
+                  <span>{e.name}</span> */}
                   {/* <IconLeftAndRight className="!size-7 text-gray-400"/> */}
-                </Button>)}
-              </div>
+                {/* </Button>)}
+              </div> */}
               <div className="flex flex-wrap gap-x-5">
-                {categories.map((item, index) =>  
-                    <CategoryCardForHeader key={index} id={index} image={img1} title={item.name} isHome={isHome}/>
+                {subCategories && subCategories.length > 0 && subCategories.map((item, index) =>  
+                    <CategoryCardForHeader key={index} id={index} image={item.image} name={item.name} isHome={isHome}/>
                 )}
               </div>
             </NavigationMenuContent>
           </NavigationMenuItem>
-          {categories && categories.length > 0 && categories.map(item => <NavigationMenuItem key={item.id}>
-            <LinkApp href={`/categories/${item.url}`} >
+          {categories && categories.length > 0 && categories.slice(0, 5).map(item => <NavigationMenuItem key={item.id}>
+            <LinkApp href={`/categories/${item.id}`} >
               <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${!isHome && '!text-black'}`}>
                 {item.name}
               </NavigationMenuLink>

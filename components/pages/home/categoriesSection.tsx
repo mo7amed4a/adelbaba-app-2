@@ -23,15 +23,15 @@ export default async function CategoriesSection({
   linkAll,
   isHome = false
 }: CategoriesSectionProps) {
-  let categories:any = []
+  let categories:CategoriesType[] = []
   try {
-    const res = await AxiosServer.get('/customer/categories')
-    categories = res?.data?.categories;
+    const res = await AxiosServer.get('/categories')
+    categories = res?.data?.data as CategoriesType[];
   } catch (error) {
     console.log(error);
   }
 
-  const [firstHalf, secondHalf] = splitArrayInHalf(categories);
+  const [firstHalf, secondHalf] = splitArrayInHalf(categories as any);
   const [firstTitle, secondTitle] = splitTitleInHalf(title);
   
   return (

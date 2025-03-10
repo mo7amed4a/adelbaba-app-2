@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
 
 
-const productsData: ProductType[] = [
+const productsData: any[] = [
   {
     id: 1,
     image: "/icons/products/1.png",

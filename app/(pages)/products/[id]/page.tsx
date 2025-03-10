@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/select";
 import { HeartIcon } from "lucide-react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 
 import {
   Table,
@@ -22,6 +22,8 @@ import {
 import { Card, CardHeader } from "@/components/ui/card";
 import ProductRating from "@/components/products/ProductRating";
 import ProductsSectionClient from "@/components/pages/home/productsSectionClient";
+import { ProductType } from "@/@types/api/product";
+import AxiosApp from "@/lib/axios";
 
 export interface ProductDetailsProps {
   id: number;
@@ -55,12 +57,31 @@ const productDetails: ProductDetailsProps = {
   ],
 };
 
-export default function Page() {
+export default function Page({
+  params
+}:{
+  params: Promise<{
+    id: string
+  }>
+}) {
+  const id = use(params).id
   const [selectedImage, setSelectedImage] = useState(
     productDetails.images[0].url
   );
-
-  return (
+  const [product, setProduct] = useState<ProductType|null>(null)
+  const fitchProduct = async() => {
+    try {
+      const res = await AxiosApp.get(`/products/${id}`)
+      setProduct(res?.data?.data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(() => {
+    fitchProduct() 
+  }, [id])
+  
+  return product &&(
     <div className="max-w-[95rem] px-4 mx-auto dark:text-white mt-20 space-y-10 mb-10">
       <div className="flex flex-col lg:flex-row gap-4">
         <div className="lg:w-24 order-2 lg:order-1">
@@ -100,7 +121,7 @@ export default function Page() {
             <div>
               <h5 className="text-gray-500">{productDetails.category}</h5>
               <h1 className="text-xl sm:text-2xl font-bold md:text-3xl">
-                {productDetails.title}
+                {product.name}
               </h1>
               <div className="flex items-center mt-2">
                 {[...Array(5)].map((_, index) => (
@@ -123,11 +144,11 @@ export default function Page() {
 
             <div className="flex gap-x-2 items-start">
               <span className="text-primary text-lg md:text-2xl font-bold">
-                {productDetails.price}
+                {product.price}
               </span>
-              {productDetails.oldPrice && (
-                <span className="text-gray-400 line-through font-bold">
-                  {productDetails.oldPrice}
+              {product.discount_price && (
+                <span className="text-gray-400 font-bold">
+                  {product.discount_price}%
                 </span>
               )}
             </div>
@@ -136,7 +157,7 @@ export default function Page() {
               <h2 className="text-lg md:text-xl font-bold">
                 Available Quantity
               </h2>
-              <p className="text-gray-400">576 products</p>
+              <p className="text-gray-400">{product.stock} products</p>
             </div>
 
             <div className="space-y-2">
@@ -144,7 +165,7 @@ export default function Page() {
                 Model Description
               </h2>
               <p className="text-gray-400 w-2/5">
-                Laptop v23 15.6 inch 9th Gen Core i7, NVIDIA GTX 1650 Graphics
+                {product.description}
               </p>
             </div>
 
@@ -379,7 +400,6 @@ export default function Page() {
         </div>
       </div>
       <ProductsSectionClient
-        products={[]}
         title="Recommended Products"
         linkAll="/categories/Hardware"
       />

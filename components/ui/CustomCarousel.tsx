@@ -48,7 +48,7 @@ children
         {/* <CarouselPrevious />
         <CarouselNext /> */}
       </Carousel>
-        <div className="py-2 text-center text-sm text-muted-foreground absolute bottom-10 start-14">
+        <div className="py-2 text-center text-sm text-muted-foreground absolute bottom-0 md:bottom-10 start-14">
           <div className="flex justify-center gap-x-2">
             {Array.from({ length: count }).map((_, index) => (
               <span

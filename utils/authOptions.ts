@@ -1,4 +1,4 @@
-import AxiosApp from '@/lib/axios';
+import AxiosAuth from '@/lib/axiosAuth';
 import type { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
@@ -19,7 +19,7 @@ export const authOptions: NextAuthOptions = {
         };
         try {
           
-          const res = await AxiosApp.post('/auth/login', dataLogin);
+          const res = await AxiosAuth.post('/auth/login', dataLogin);
             
           if (res) {
             const userData = res.data.user;
@@ -44,7 +44,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         try {
-          const user = await AxiosApp.post('/auth/register', {
+          const user = await AxiosAuth.post('/auth/register', {
             name: credentials?.name,
             email: credentials?.email,
             password: credentials?.password,

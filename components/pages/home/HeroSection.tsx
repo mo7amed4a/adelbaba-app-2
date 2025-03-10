@@ -13,20 +13,20 @@ export default function HeroSection() {
           style={{
             background: "linear-gradient(90deg, #F3B852 0%, #FBE7C5 100%)",
           }}
-          className="grid grid-cols-1 md:grid-cols-2 rounded-2xl md:h-72 pt-10 md:pt-0"
+          className="grid grid-cols-2 rounded-2xl h-40 md:h-72 md:pt-0"
         >
-          <div className="flex items-center">
-              <div className="flex flex-col justify-between ms-10 space-y-7">
-                  <h2 className="text-sm">Best Deal Online on smart watches</h2>
-                  <h1 className="text-xl md:text-3xl font-bold">SMART WEARABLE.</h1>
+          <div className="flex md:items-center pt-5">
+              <div className="flex flex-col md:justify-between ms-10 space-y-2 md:space-y-7">
+                  <h2 className="text-xs">Best Deal Online on smart watches</h2>
+                  <h1 className="text-sm md:text-3xl font-bold">SMART WEARABLE.</h1>
                   <p className="font-bold">UP to 40% OFF</p>
                   {/* <Svg1 /> */}
               </div>
           </div>
-          <div className="relative h-72 flex justify-center p-5">
+          <div className="relative h-72 flex justify-center md:items-center p-5">
             <Svg2/>
             <Image
-              className="h-full relative z-[1]"
+              className="size-20 md:size-auto md:h-full relative z-[1]"
               src={"/icons/watch.png"}
               width={300}
               height={300}

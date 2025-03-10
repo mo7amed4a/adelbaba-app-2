@@ -1,8 +1,7 @@
 import { ProductType } from "@/@types/api/product";
-import { ProductCardProps } from "@/components/products/product";
 import ProductAccountCart from "@/components/products/product-account-cart";
 
-const productsData: ProductType[] = [
+const productsData: any[] = [
   {
     id: 1,
     image: "/icons/products/1.png",

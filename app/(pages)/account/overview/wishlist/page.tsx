@@ -2,7 +2,7 @@ import { ProductType } from "@/@types/api/product";
 import ProductAccountWishlist from "@/components/products/product-account-wishlist";
 
 
-const productsData: ProductType[] = [
+const productsData: any[] = [
   {
     id: 1,
     image: "/icons/products/1.png",

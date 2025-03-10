@@ -4,10 +4,10 @@ import LinkApp from "@/components/global/LinkApp";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { use, useState } from "react";
+import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import AxiosApp from "@/lib/axios";
+import AxiosAuth from "@/lib/axiosAuth";
 
 
 export default function ForgotPasswordForm() {
@@ -27,7 +27,7 @@ export default function ForgotPasswordForm() {
     }),
     onSubmit: async (values) => {
       try {
-        const result = await AxiosApp.post('/auth/reset-password', {
+        const result = await AxiosAuth.post('/auth/reset-password', {
           email: values.email,
         })
         if (result.status === 200) {

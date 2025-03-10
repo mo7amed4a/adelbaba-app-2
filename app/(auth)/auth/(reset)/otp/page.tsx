@@ -8,11 +8,11 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import AxiosApp from "@/lib/axios";
+import AxiosAuth from "@/lib/axiosAuth";
 
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 import { useSearchParams } from "next/navigation";
-import { use, useState } from "react";
+import { useState } from "react";
 
 export default function LoginForm() {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +28,7 @@ export default function LoginForm() {
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const result = await AxiosApp.post('/auth/otp', {
+      const result = await AxiosAuth.post('/auth/otp', {
         email: email.get('email'),
         otp_code: value
       })

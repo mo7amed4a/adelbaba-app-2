@@ -26,8 +26,10 @@ export default async function ProductSection({
   const [firstTitle, secondTitle] = splitTitleInHalf(title);
   let products:any = []
   try {
-    const res = await AxiosServer.get('/customer/products')
-    products = res?.data?.products    
+    const res = await AxiosServer.get('/products')
+    products = res?.data?.data
+    console.log(products?.data);
+    
   } catch (error) {
     console.log(error);
   }
@@ -54,7 +56,7 @@ export default async function ProductSection({
           <CarouselContent>
             {products && products?.length > 0 && products?.map((product:any, index:any) => (
               <CarouselItem key={index} className="basis-1/2 lg:basis-1/4">
-                <ProductCard {...product} />
+                <ProductCard product={product} />
               </CarouselItem>
             ))}
           </CarouselContent>

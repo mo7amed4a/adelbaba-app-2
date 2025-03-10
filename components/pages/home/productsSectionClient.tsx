@@ -1,3 +1,5 @@
+"use client"
+import { ProductType } from "@/@types/api/product";
 import IconLeftAndRight from "@/components/global/IconLeftAndRight";
 import ProductCard from "@/components/products/product";
 import {
@@ -5,25 +7,40 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import AxiosApp from "@/lib/axios";
 import { splitTitleInHalf } from "@/utils/splitArrayInHalf";
 import Link from "next/link";
-import React from "react";
-
+import React, { useEffect, useState } from "react";
 
 interface ProductSectionProps {
   title: string;
   linkAll: string;
   isCarousel?: boolean;
-  products: any
 }
 
-export default function productsSectionClient({
+export default function ProductsSectionClient({
   title,
   linkAll,
   isCarousel = true,
-  products
 }: ProductSectionProps) {
   const [firstTitle, secondTitle] = splitTitleInHalf(title);
+  const [products, setProducts] = useState<ProductType[]>([]);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await AxiosApp.get("/products");
+      const data = response?.data?.data;
+      setProducts(data);
+      return data;
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      return [];
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
     <section className="py-12 bg-white dark:bg-gray-800 dark:text-white">
@@ -34,7 +51,7 @@ export default function productsSectionClient({
             <span className="text-primary">{secondTitle}</span>
           </h2>
           <div className="inline-block pb-2 items-center text-xs md:text-base">
-          <Link
+            <Link
               href={linkAll}
               className="flex items-center hover:text-primary text-gray-500"
             >
@@ -43,23 +60,25 @@ export default function productsSectionClient({
             </Link>
           </div>
         </div>
-        {isCarousel ? <Carousel className="mt-8">
-          <CarouselContent>
-            {products.map((product:any, index:any) => (
-              <CarouselItem key={index} className="basis-1/2 lg:basis-1/4">
-                <ProductCard {...product} />
-              </CarouselItem>
+        {isCarousel ? (
+          <Carousel className="mt-8">
+            <CarouselContent>
+              {products.map((product: any, index: any) => (
+                <CarouselItem key={index} className="basis-1/2 lg:basis-1/4">
+                  <ProductCard {...product} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        ) : (
+          <div className="mt-10 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {products.map((item: any) => (
+              <div key={item.id}>
+                <ProductCard isCarousel={isCarousel} product={item}/>
+              </div>
             ))}
-          </CarouselContent>
-        </Carousel> : 
-        <div className="mt-10 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          {products.map((item:any) => (
-            <div key={item.id}>
-              <ProductCard isCarousel={isCarousel} {...item}/>
-            </div>
-            ))}
-        </div>
-      }
+          </div>
+        )}
       </div>
     </section>
   );
