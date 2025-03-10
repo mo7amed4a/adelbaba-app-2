@@ -10,7 +10,7 @@ const nextConfig = {
 // localeDetection:true
 //   },
   images: {
-    domains: ["pasteboard.co","images.unsplash.com", "s3-alpha-sig.figma.com", "46.202.143.230"]
+    domains: ["pasteboard.co","adilbaba.net","images.unsplash.com", "s3-alpha-sig.figma.com", "46.202.143.230"]
   }
 }
 
